@@ -31,7 +31,7 @@ cmd.exe /c "mysql -u <Username> -p portfolio_photo < portfolio_photo_mysql.sql"
 
 Ce projet utilise [dotenv](https://github.com/motdotla/dotenv#readme).
 
-`.env`
+Pour configurer les variables d'environnement, vous devez ajouter un simple fichier `.env` à la racine du serveur api.
 ```
 # Connection à la base de données MySQL
 MYSQL_HOST='127.0.0.1'
