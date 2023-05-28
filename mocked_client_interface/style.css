@@ -1,0 +1,21 @@
+*, ::after, ::before {
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    height: 100vh;
+    display: grid;
+    justify-items: center;
+}
+
+[name="send-image-form"] {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
