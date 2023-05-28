@@ -28,13 +28,14 @@ router.get('/login', async (req, res) => {
                     if(!valid) {
                         res.status(401).json({message: "Identifiants invalides"})
                     } else {
+                        const token = jwt.sign(
+                            {userId: user.id},
+                            process.env.JWT_SECRET_KEY,
+                            {expiresIn: '24h'})
+                        res.cookie('jwt', token, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 })
                         res.status(200).json({
                             userId: user.id,
-                            token: jwt.sign(
-                                {userId: user.id},
-                                process.env.JWT_SECRET_KEY,
-                                {expiresIn: '24h'}
-                            )
+                            token
                         })
                     }
                 })
