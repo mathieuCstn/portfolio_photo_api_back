@@ -47,5 +47,6 @@ CLOUDINARY_API_KEY='<API Key>'
 CLOUDINARY_API_SECRET='<API Secret>'
 
 # Clé secret pour encoder et décoder les tokens avec JsonWebToken
-JWT_SECRET_KEY="vousmetrouverejamais"
+JWT_ACCESS_TOKEN_SECRET="vousmetrouverejamais"
+JWT_REFRESH_TOKEN_SECRET="makepizzasgreatagain"
 ```
