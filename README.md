@@ -6,7 +6,7 @@ L'application front-end(côté client) accéssible en [cliquant ici](https://git
 
 # Mise en place de la base de données MySQL
 
-![Architecture de la base de données du projet portfolio_photo](https://github.com/mathieuCstn/portfolio_photo_api_back/blob/42359c35b63be38101b561b40dcdca3d16419957/readme_assets/bdd_architecture_portfolio_photo-2023-03-24-0007.png)
+![Architecture de la base de données du projet portfolio_photo](https://raw.githubusercontent.com/mathieuCstn/portfolio_photo_api_back/debe6c5ad8a9814e73732478712c167562f4e2b7/readme_assets/bdd_architecture_portfolio_photo-2023-03-24.svg)
 
 ## Importation de la base de données depuis un terminal
 
