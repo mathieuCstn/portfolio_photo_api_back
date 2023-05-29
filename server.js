@@ -11,7 +11,7 @@ app.use(express.urlencoded({extended: true}))
 
 app.use(cors({
     origin: 'http://localhost:3000',
-    Credential: true
+    credentials: true
 }))
 
 const userRoutes = require('./routes/user')

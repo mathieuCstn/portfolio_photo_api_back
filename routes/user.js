@@ -11,37 +11,69 @@ router.post('/signup', async (req, res) => {
     if(user) return res.status(400).json({message: "L'addresse email est déjà utilisé."})
 
     bcrypt.hash(req.body.password, 10)
-        .then(hash => {
-            User.createUser(hash, req.body.email, req.body?.username)
-                .then(() => res.status(201).json({message: "Nouvel utilisateur ajouté !"}))
-                .catch(error => res.status(500).json({ error }))
+        .then(async hash => {
+            try {
+                const { insertId } = await User.createUser(hash, req.body.email, {userName: req.body?.username})
+                const newUser = {id: insertId}
+                const userRole = {id: 2} //id corresponding to the "user" role defined in the "roles" table (database).
+
+                User.addRole(newUser, userRole)
+                    .then(() => res.status(201).json({message: "Nouvel utilisateur ajouté !"}))
+                    .catch(error => Promise.reject(error))
+            } catch (error) {
+                return res.status(500).json({ name: error.name, message: error.message, ...error})
+            }
         })
         .catch(error => res.status(500).json({ error }))
 })
 
-router.get('/login', async (req, res) => {
+router.post('/login', async (req, res) => {
+    const emailOrUsername = req.body?.email || req.body?.username
+    if(!emailOrUsername || !req.body?.password) return res.status(400).json({message: "Identifiant(s) manquant(s)"})
     User.findOneUser(req.body.email)
         .then(user => {
             if(!user) return res.status(401).json({message: "Identifiants invalides"})
             bcrypt.compare(req.body.password, user.password)
-                .then(valid => {
-                    if(!valid) {
-                        res.status(401).json({message: "Identifiants invalides"})
-                    } else {
-                        const token = jwt.sign(
-                            {userId: user.id},
-                            process.env.JWT_SECRET_KEY,
-                            {expiresIn: '24h'})
-                        res.cookie('jwt', token, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 })
+                .then(async valid => {
+                    if(!valid) return res.status(401).json({message: "Identifiants invalides"})
+                    try {
+                        const roleList = await User.getRoles(user)
+                        const accessToken = jwt.sign(
+                            {userInfo: {
+                                userId: user.id,
+                                roles: roleList
+                            }},
+                            process.env.JWT_ACCESS_TOKEN_SECRET,
+                            {expiresIn: '24h'}
+                        )
+                        const refreshToken = jwt.sign(
+                            {email: user.email, username: user.username},
+                            process.env.JWT_REFRESH_TOKEN_SECRET,
+                            {expiresIn: '30s'}
+                        )
+                        User.setRefreshToken(user, refreshToken)
+                        res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 })
                         res.status(200).json({
                             userId: user.id,
-                            token
+                            roles: roleList,
+                            accessToken
                         })
+                    } catch (error) {
+                        return res.status(500).json({ name: error.name, message: error.message, ...error})
                     }
                 })
                 .catch(error => res.status(401).json({ error }))
         })
         .catch(error => res.status(500).json({ error }))
 })
+
+/* router.get('/userroles', (req, res) => {
+    User.getRoles({id: req.body.id})
+        .then((results) => {
+            console.log(results)
+            res.status(200).json({message: "All is OK !", results})
+        })
+        .catch(error => res.status(500).json({error}))
+}) */
 
 module.exports = router
