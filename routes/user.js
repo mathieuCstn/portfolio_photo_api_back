@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
 const User = require('../models/User')
 
 router.post('/signup', async (req, res) => {
-    if(req.body.email.length === 0 || req.body.password.length === 0) return res.status(400).json({message: "Une addresse email et un mot de passe sont requient pour cette opération !"})
+    if(req.body.email?.length === 0 || req.body.password?.length === 0) return res.status(400).json({message: "Une addresse email et un mot de passe sont requient pour cette opération !"})
 
     const user = await User.findOneUser(req.body.email)
     if(user) return res.status(400).json({message: "L'addresse email est déjà utilisé."})
@@ -66,14 +66,5 @@ router.post('/login', async (req, res) => {
         })
         .catch(error => res.status(500).json({ error }))
 })
-
-/* router.get('/userroles', (req, res) => {
-    User.getRoles({id: req.body.id})
-        .then((results) => {
-            console.log(results)
-            res.status(200).json({message: "All is OK !", results})
-        })
-        .catch(error => res.status(500).json({error}))
-}) */
 
 module.exports = router
