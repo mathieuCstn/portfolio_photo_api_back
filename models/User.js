@@ -88,4 +88,18 @@ module.exports = class User {
                         .then(results => results[0])
                         .catch(error => Promise.reject(error))
         }
+
+        /**
+         * Retrieves a user using a refreshToken as a reference.
+         * @param {string} refreshToken 
+         * @returns {Promise<{}>}
+         */
+        static findOneUserWithRefreshToken(refreshToken) {
+                return dbconnect.then(db => db.query(
+                        'SELECT * FROM users WHERE refreshToken = ?',
+                        [refreshToken]
+                ))
+                        .then(results => results[0][0])
+                        .catch(error => Promise.reject(error))
+        }
 }

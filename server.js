@@ -16,8 +16,10 @@ app.use(cors({
 
 const userRoutes = require('./routes/user')
 const productRoutes = require('./routes/product')
+const refreshRoutes = require('./routes/refresh')
 app.use('/api/users', userRoutes)
 app.use('/api/products', productRoutes)
+app.use('/api/refresh', refreshRoutes)
 
 const PORT = process.env.PORT || 9500
 app.listen(PORT, () => {

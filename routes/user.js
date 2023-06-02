@@ -44,12 +44,12 @@ router.post('/login', async (req, res) => {
                                 roles: roleList
                             }},
                             process.env.JWT_ACCESS_TOKEN_SECRET,
-                            {expiresIn: '24h'}
+                            {expiresIn: '10s'}
                         )
                         const refreshToken = jwt.sign(
                             {email: user.email},
                             process.env.JWT_REFRESH_TOKEN_SECRET,
-                            {expiresIn: '30s'}
+                            {expiresIn: '24h'}
                         )
                         User.setRefreshToken(user, refreshToken)
                         res.cookie('jwt', refreshToken, { httpOnly: true, secure: true, sameSite: 'None', maxAge: 24 * 60 * 60 * 1000 })
