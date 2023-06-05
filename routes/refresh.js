@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken')
 
 router.get('/', async (req, res) => {
     try {
-        const cookies = req.body.cookies;
+        const cookiesEntries = req.headers.cookie.split('; ').map(cookie => cookie.split('='));
+        const cookies = Object.fromEntries(cookiesEntries)
         if(!cookies?.jwt) return res.status(401).json({message: "Not authenticated"})
         const refreshToken = cookies.jwt
     
@@ -15,18 +16,18 @@ router.get('/', async (req, res) => {
         jwt.verify(
             refreshToken,
             process.env.JWT_REFRESH_TOKEN_SECRET,
-            (error, decodedToken) => {
-                if (err || foundUser.username !== decodedToken.username) return res.status(403).json({ error })
-                const roles = User.getRoles(foundUser)
+            async (error, decodedToken) => {
+                if (error || foundUser.email !== decodedToken.email) return res.status(403).json({ error })
+                const roles = await User.getRoles(foundUser)
                 const accessToken = jwt.sign(
                     {userInfo: {
-                        userId: foundUser.id,   // Pas convaincu par la manière don l'id est obtenu. Peut être que je devrais utiliser les "email" ? (champ email indiqué comme clé unique dans la base de données)
+                        userId: foundUser.id,
                         roles: roles
                     }},
-                    process.env.JWT_REFRESH_TOKEN_SECRET,
-                    { expiresIn: '10s' }
+                    process.env.JWT_ACCESS_TOKEN_SECRET,
+                    { expiresIn: '1h' }
                 )
-                res.status(200).json({ roles, accessToken })
+                res.status(200).json({userId: foundUser.id, roles, accessToken })
             }
         )
     } catch (error) {

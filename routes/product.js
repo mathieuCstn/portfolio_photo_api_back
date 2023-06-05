@@ -3,7 +3,7 @@ const router = express.Router()
 const multer = require('multer')
 const multerCloudinaryStreamSystemeStorage = require('../utils/multerCloudinaryStreamSystemeStorage')
 const Product = require('../models/Product')
-const auth = require('../middlewares/auth')
+const verifyRoles = require('../middlewares/verifyRoles')
 
 const storage = multerCloudinaryStreamSystemeStorage({
     cloudinary_config: {
@@ -17,7 +17,7 @@ const upload = multer({
     storage: storage
 })
 
-router.post('/add', auth, upload.single('image'), (req, res) => {
+router.post('/add', verifyRoles(['admin']), upload.single('image'), (req, res) => {
     const public_id = req.file.cld_uploaded_file.public_id
     const price = req.body.price
     const title = req.body.title || req.file.originalname
