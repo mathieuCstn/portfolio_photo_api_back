@@ -10,6 +10,8 @@ module.exports = class User {
          * @returns {Promise<ResultSetHeader>}
          */
         static createUser(password, email, options) {
+                if(!password) throw new Error("User.createUser() : No 'password' parameter found")
+                if(!email) throw new Error("User.createUser() : No 'email' parameter found")
                 const optionsDefault = {userName: null, newsletter: false}
                 const params = {...optionsDefault, ...options}
                 return dbconnect.then(db => db.query(

@@ -5,7 +5,7 @@ const jwt = require('jsonwebtoken')
  * @param  {...string} allowedRoles 
  * @returns {void}
  */
-function verifyRoles(...allowedRoles) {
+function verifyRoles(allowedRoles) {
     return (req, res, next) => {
         const authHeader = req.headers?.authorization || req.headers?.Authorization;
         if (!authHeader?.startsWith('Bearer ')) return res.sendStatus(401);

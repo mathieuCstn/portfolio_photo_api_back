@@ -27,7 +27,7 @@ router.post('/signup', async (req, res) => {
         .catch(error => res.status(500).json({ error }))
 })
 
-router.post('/login', async (req, res) => {
+router.post('/login', (req, res) => {
     const emailOrUsername = req.body?.email || req.body?.username
     if(!emailOrUsername || !req.body?.password) return res.status(400).json({message: "Identifiant(s) manquant(s)"})
     User.findOneUser(req.body.email)
