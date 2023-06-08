@@ -2,7 +2,8 @@
 
 L'application front-end(côté client) accéssible en [cliquant ici](https://github.com/mathieuCstn/portfolio_photo).
 
-Afin de tester les fonctionnalités que procurent les privilèges administrateur. Un compte utilisateur a été créé à cet escient:
+
+Afin de tester les fonctionnalités que procurent les privilèges administrateur. Un compte utilisateur a été créé à cet escient :
 
 compt : contact@mathieu.admin
 
