@@ -5,6 +5,7 @@ L'application front-end(côté client) accéssible en [cliquant ici](https://git
 Afin de tester les fonctionnalités que procurent les privilèges administrateur. Un compte utilisateur a été créé à cet escient:
 
 compt : contact@mathieu.admin
+
 mdp :   root
 
 # Mise en place de la base de données MySQL
