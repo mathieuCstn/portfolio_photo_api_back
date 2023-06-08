@@ -1,8 +1,11 @@
 # portfolio_photo - serveur api
 
-le serveur api du projet portfolio_photo. En attente du systeme d'échange de token côté front.
-
 L'application front-end(côté client) accéssible en [cliquant ici](https://github.com/mathieuCstn/portfolio_photo).
+
+Afin de tester les fonctionnalités que procurent les privilèges administrateur. Un compte utilisateur a été créé à cet escient:
+
+compt : contact@mathieu.admin
+mdp :   root
 
 # Mise en place de la base de données MySQL
 
