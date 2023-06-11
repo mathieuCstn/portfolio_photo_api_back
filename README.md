@@ -2,12 +2,12 @@
 
 L'application front-end(côté client) accéssible en [cliquant ici](https://github.com/mathieuCstn/portfolio_photo).
 
+## Compte administrateur de test
+Afin de tester les fonctionnalités que procurent les privilèges administrateur. Un compte utilisateur a été créé à cet escient:
 
-Afin de tester les fonctionnalités que procurent les privilèges administrateur. Un compte utilisateur a été créé à cet escient :
+compt : contact@mathieu.admin
 
-compt: contact@mathieu.admin
-
-mdp: root
+mdp   : root
 
 # Mise en place de la base de données MySQL
 

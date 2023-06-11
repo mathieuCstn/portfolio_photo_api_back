@@ -66,7 +66,7 @@ module.exports = class Product {
     }
 
     /**
-     * 
+     * Delete a product object from products table and the image in cloudinary.
      * @param {number} productId 
      * @returns {Promise<ResultSetHeader>}
      */
